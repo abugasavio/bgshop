@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GameCard = ({game}) => (
+const GamesCard = ({game}) => (
     <div className="ui card">
         <div className="image">
             <span className="ui green ribbon label">{game.price}</span>
@@ -17,4 +17,4 @@ const GameCard = ({game}) => (
     </div>
 )
 
-export default GameCard
+export default GamesCard
