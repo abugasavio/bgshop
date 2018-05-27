@@ -16,4 +16,8 @@ GamesList.propTypes = {
         .isRequired
 };
 
+GamesList.defaultProps = {
+    games: []
+};
+
 export default GamesList;
