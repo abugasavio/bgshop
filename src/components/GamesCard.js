@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Price from './Price';
+import Featured from './Featured';
 
 const GamesCard = ({game}) => (
     <div className="ui card">
+        <Featured featured={game.featured}/>
         <div className="image">
             <Price price={game.price}/>
             <img src={game.thumbnail} alt="Very Nice Image"/>
@@ -21,7 +23,7 @@ const GamesCard = ({game}) => (
 
 GamesCard.propTypes = {
     game: PropTypes
-        .shape({price: PropTypes.string.isRequired, name: PropTypes.string.isRequired, players: PropTypes.string.isRequired, duration: PropTypes.string.isRequired})
+        .shape({price: PropTypes.string.isRequired, name: PropTypes.string.isRequired, players: PropTypes.string.isRequired, duration: PropTypes.string.isRequired, featured: PropTypes.string.isRequired})
         .isRequired
 }
 

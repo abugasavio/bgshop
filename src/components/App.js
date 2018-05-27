@@ -1,5 +1,6 @@
 import React from 'react';
 import GamesList from './GamesList';
+import _orderBy from 'lodash/orderBy';
 
 const games = [
     {
@@ -9,15 +10,17 @@ const games = [
                 "tinysrgb&dpr=2&h=750&w=1260",
         "price": "29.99",
         "players": "2-5",
-        "duration": "45"
+        "duration": "45",
+        "featured": false
     }, {
         "_id": 2,
-        "name": "Roll for the Galaxy",
+        "name": "ARoll for the Galaxy",
         "thumbnail": "https://images.pexels.com/photos/205324/pexels-photo-205324.jpeg?auto=compress&c" +
                 "s=tinysrgb&dpr=2&h=750&w=1260",
         "price": "29.99",
         "players": "2-5",
-        "duration": "45"
+        "duration": "45",
+        "featured": false
     }, {
         "_id": 3,
         "name": "Roll for the Galaxy",
@@ -25,7 +28,8 @@ const games = [
                 "s=tinysrgb&h=750&w=1260",
         "price": "29.99",
         "players": "2-5",
-        "duration": "45"
+        "duration": "45",
+        "featured": true
     }
 
 ]
@@ -36,7 +40,11 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({games})
+        this.setState({
+            games: _orderBy(games, [
+                "featured", "name"
+            ], ["desc", "asc"])
+        })
     }
 
     render() {
