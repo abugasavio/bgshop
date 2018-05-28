@@ -47,9 +47,13 @@ class App extends React.Component {
         })
     }
 
+    toggleFeatured() {
+        alert('toggled')
+    }
+
     render() {
         return (
-            <div className="ui container"><GamesList games={this.state.games}/></div>
+            <div className="ui container"><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
         )
     }
 }
