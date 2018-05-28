@@ -22,7 +22,7 @@ const Featured = ({featured, toggleFeatured, gameId}) => {
 };
 
 Featured.propTypes = {
-    featured: PropTypes.string.isRequired,
+    featured: PropTypes.bool.isRequired,
     toggleFeatured: PropTypes.func.isRequired,
     gameId: PropTypes.number.isRequired
 };
