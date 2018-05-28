@@ -82,7 +82,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="ui container"><GamesForm/><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
+            <div className="ui container"><GamesForm/><br/><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
         )
     }
 }
