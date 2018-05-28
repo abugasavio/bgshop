@@ -5,7 +5,10 @@ import Featured from './Featured';
 
 const GamesCard = ({game, toggleFeatured}) => (
     <div className="ui card">
-        <Featured featured={game.featured} toggleFeatured={toggleFeatured}/>
+        <Featured
+            featured={game.featured}
+            toggleFeatured={toggleFeatured}
+            gameId={game._id}/>
         <div className="image">
             <Price price={game.price}/>
             <img src={game.thumbnail} alt="Very Nice Image"/>

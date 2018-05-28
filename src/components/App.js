@@ -41,15 +41,24 @@ class App extends React.Component {
 
     componentDidMount() {
         this.setState({
-            games: _orderBy(games, [
-                "featured", "name"
-            ], ["desc", "asc"])
+            games: this.sortGames(games)
         })
     }
 
-    toggleFeatured() {
-        alert('toggled')
+    sortGames(games) {
+        return _orderBy(games, [
+            "featured", "name"
+        ], ["desc", "asc"])
     }
+
+    toggleFeatured = (gameId) => this.setState({
+        games: this.sortGames(this.state.games.map(game => gameId === game._id
+            ? {
+                ...game,
+                featured: !game.featured
+            }
+            : game))
+    })
 
     render() {
         return (
