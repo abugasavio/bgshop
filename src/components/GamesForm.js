@@ -1,31 +1,5 @@
 import React, {Component} from 'react';
 
-const tags = [
-    {
-        _id: 1,
-        name: "dice"
-    }, {
-        _id: 2,
-        name: "economic"
-    }, {
-        _id: 3,
-        name: "family"
-    }
-]
-
-const genres = [
-    {
-        _id: 1,
-        name: "abstract"
-    }, {
-        _id: 2,
-        name: "euro"
-    }, {
-        _id: 2,
-        name: "emeritrash"
-    }
-]
-
 class GamesForm extends Component {
     state = {
         name: '',
