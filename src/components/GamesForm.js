@@ -35,7 +35,8 @@ class GamesForm extends Component {
         players: '',
         featured: true,
         tags: [],
-        genre: 1
+        genre: 1,
+        publisher: 0
     }
     handleSubmit = e => {
         e.preventDefault();
@@ -160,7 +161,17 @@ class GamesForm extends Component {
                             </div>
                         </div>
                     ))}
-
+                </div>
+                <div className="field">
+                    <select name="publishers" id="publishers" onChange={this.handleNumberChange}>
+                        <option value="">Choose Publisher</option>
+                        {this
+                            .props
+                            .publishers
+                            .map(publisher => (
+                                <option value={publisher._id} key={publisher._id}>{publisher.name}</option>
+                            ))}
+                    </select>
                 </div>
                 <button className="ui button" type="submit">Submit</button>
             </form>

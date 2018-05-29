@@ -3,6 +3,19 @@ import GamesList from './GamesList';
 import _orderBy from 'lodash/orderBy';
 import GamesForm from './GamesForm';
 
+const publishers = [
+    {
+        _id: 1,
+        name: 'Milele'
+    }, {
+        _id: 2,
+        name: 'Uzima'
+    }, {
+        _id: 3,
+        name: 'Ujamaa'
+    }
+]
+
 const games = [
     {
         "_id": 1,
@@ -82,7 +95,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="ui container"><GamesForm/><br/><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
+            <div className="ui container"><GamesForm publishers={publishers}/><br/><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
         )
     }
 }
