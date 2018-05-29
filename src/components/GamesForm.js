@@ -8,8 +8,6 @@ class GamesForm extends Component {
         duration: 0,
         players: '',
         featured: true,
-        tags: [],
-        genre: 1,
         publisher: 0
     }
     handleSubmit = e => {
@@ -28,25 +26,6 @@ class GamesForm extends Component {
     handleCheckboxChange = e => this.setState({
         [e.target.name]: e.target.checked
     })
-
-    handleGenreChange = genre => this.setState({genre: genre._id})
-
-    toggleTag = tag => this
-        .state
-        .tags
-        .includes(tag._id)
-        ? this.setState({
-            tags: this
-                .state
-                .tags
-                .filter(id => id !== tag._id)
-        })
-        : this.setState({
-            tags: [
-                ...this.state.tags,
-                tag._id
-            ]
-        });
 
     render() {
         return (
@@ -104,37 +83,6 @@ class GamesForm extends Component {
                         checked={this.state.featured}
                         onChange={this.handleCheckboxChange}/>
                     <label htmlFor="featured">Featured?</label>
-                </div>
-                <div className="field">
-                    <label htmlFor="tags">Tags</label>
-                    {tags.map(tag => (
-                        <div key={tag._id} className="inline field">
-                            <input
-                                type="checkbox"
-                                checked={this
-                                .state
-                                .tags
-                                .includes(tag._id)}
-                                onChange={() => this.toggleTag(tag)}/>
-                            <label htmlFor={`tag-${tag._id}`}>{tag.name}</label>
-
-                        </div>
-                    ))}
-                </div>
-                <div className="field">
-                    <label htmlFor="genres">Genres</label>
-                    {genres.map(genre => (
-                        <div class="inline field" key={genre._id}>
-                            <div class="ui radio checkbox"><input
-                                type="radio"
-                                name={`genre-{genre._id}`}
-                                checked={this.state.genre == genre._id}
-                                name="genres"
-                                onChange={() => this.handleGenreChange(genre)}/>
-                                <label htmlFor={`genre-{genre._id}`}>{genre.name}</label>
-                            </div>
-                        </div>
-                    ))}
                 </div>
                 <div className="field">
                     <select name="publishers" id="publishers" onChange={this.handleNumberChange}>
