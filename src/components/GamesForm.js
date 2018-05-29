@@ -13,6 +13,19 @@ const tags = [
     }
 ]
 
+const genres = [
+    {
+        _id: 1,
+        name: "abstract"
+    }, {
+        _id: 2,
+        name: "euro"
+    }, {
+        _id: 2,
+        name: "emeritrash"
+    }
+]
+
 class GamesForm extends Component {
     state = {
         name: '',
@@ -21,7 +34,8 @@ class GamesForm extends Component {
         duration: 0,
         players: '',
         featured: true,
-        tags: []
+        tags: [],
+        genre: 1
     }
     handleSubmit = e => {
         e.preventDefault();
@@ -39,6 +53,8 @@ class GamesForm extends Component {
     handleCheckboxChange = e => this.setState({
         [e.target.name]: e.target.checked
     })
+
+    handleGenreChange = genre => this.setState({genre: genre._id})
 
     toggleTag = tag => this
         .state
@@ -129,6 +145,22 @@ class GamesForm extends Component {
 
                         </div>
                     ))}
+                </div>
+                <div className="field">
+                    <label htmlFor="genres">Genres</label>
+                    {genres.map(genre => (
+                        <div class="inline field" key={genre._id}>
+                            <div class="ui radio checkbox"><input
+                                type="radio"
+                                name={`genre-{genre._id}`}
+                                checked={this.state.genre == genre._id}
+                                name="genres"
+                                onChange={() => this.handleGenreChange(genre)}/>
+                                <label htmlFor={`genre-{genre._id}`}>{genre.name}</label>
+                            </div>
+                        </div>
+                    ))}
+
                 </div>
                 <button className="ui button" type="submit">Submit</button>
             </form>
