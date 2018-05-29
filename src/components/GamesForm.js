@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactImageFallback from 'react-image-fallback';
 
 class GamesForm extends Component {
     state = {
@@ -8,7 +9,8 @@ class GamesForm extends Component {
         duration: 0,
         players: '',
         featured: true,
-        publisher: 0
+        publisher: 0,
+        thumbnail: ""
     }
     handleSubmit = e => {
         e.preventDefault();
@@ -30,24 +32,45 @@ class GamesForm extends Component {
     render() {
         return (
             <form className="ui form" onSubmit={this.handleSubmit}>
+                <div className="ui grid">
+                    <div className="twelve wide column">
+                        <div className="field">
+                            <label htmlFor="">Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="name"
+                                value={this.state.name}
+                                onChange={this.handleStringChange}/>
+                        </div>
+                        <div className="field">
+                            <label htmlFor="">Description</label>
+                            <textarea
+                                name="description"
+                                onChange={this.handleStringChange}
+                                cols="30"
+                                rows="10"
+                                placeholder="Description"></textarea>
+                        </div>
+                    </div>
+                    <div className="four wide column">
+                        <ReactImageFallback
+                            src={this.state.thumbnail}
+                            fallbackImage="http://via.placeholder.com/250x250"
+                            className="ui image"/>
+                    </div>
+                </div>
+                <br/>
                 <div className="field">
-                    <label htmlFor="">Name</label>
+                    <label htmlFor="">Thumbnail</label>
                     <input
                         type="text"
-                        name="name"
-                        placeholder="name"
-                        value={this.state.name}
+                        name="thumbnail"
+                        placeholder="thumbnail"
+                        value={this.state.thumbnail}
                         onChange={this.handleStringChange}/>
                 </div>
-                <div className="field">
-                    <label htmlFor="">Description</label>
-                    <textarea
-                        name="description"
-                        onChange={this.handleStringChange}
-                        cols="30"
-                        rows="10"
-                        placeholder="Description"></textarea>
-                </div>
+
                 <div className="three fields">
                     <div className="field">
                         <label htmlFor="">Price(in cents)</label>
@@ -97,7 +120,7 @@ class GamesForm extends Component {
                 </div>
                 <button className="ui button" type="submit">Submit</button>
             </form>
-        );
+        )
     }
 }
 
