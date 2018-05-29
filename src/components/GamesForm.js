@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactImageFallback from 'react-image-fallback';
+import PropTypes from 'prop-types';
 
 class GamesForm extends Component {
     state = {
@@ -118,10 +119,18 @@ class GamesForm extends Component {
                             ))}
                     </select>
                 </div>
-                <button className="ui button" type="submit">Submit</button>
+                <div className="ui large buttons">
+                    <button className="ui button" type="submit">Submit</button>
+                    <div className="or"></div>
+                    <button className="ui button" onClick={this.props.hideGameForm}>Cancel</button>
+                </div>
             </form>
         )
     }
 }
+
+GamesForm.propTypes = {
+    hideGameForm: PropTypes.func.isRequired
+};
 
 export default GamesForm;

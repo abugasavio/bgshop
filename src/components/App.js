@@ -2,6 +2,7 @@ import React from 'react';
 import GamesList from './GamesList';
 import _orderBy from 'lodash/orderBy';
 import GamesForm from './GamesForm';
+import TopNavigation from './TopNavigation';
 
 const publishers = [
     {
@@ -69,7 +70,8 @@ const games = [
 
 class App extends React.Component {
     state = {
-        games: []
+        games: [],
+        showGameForm: false
     }
 
     componentDidMount() {
@@ -93,9 +95,12 @@ class App extends React.Component {
             : game))
     })
 
+    showGameForm = () => this.setState({showGameForm: true})
+    hideGameForm = () => this.setState({showGameForm: false})
+
     render() {
         return (
-            <div className="ui container"><GamesForm publishers={publishers}/><br/><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
+            <div className="ui container"><TopNavigation showGameForm={this.showGameForm}/>{this.state.showGameForm && <GamesForm publishers={publishers} hideGameForm={this.hideGameForm}/>}<br/><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
         )
     }
 }
