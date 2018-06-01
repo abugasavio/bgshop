@@ -3,6 +3,8 @@ import GamesList from './GamesList';
 import _orderBy from 'lodash/orderBy';
 import GamesForm from './GamesForm';
 import TopNavigation from './TopNavigation';
+import SignupForm from './SignupForm';
+import LoginForm from './LoginForm';
 
 const publishers = [
     {
@@ -71,7 +73,9 @@ const games = [
 class App extends React.Component {
     state = {
         games: [],
-        showGameForm: false
+        showGameForm: false,
+        showSignupForm: false,
+        showLoginForm: false
     }
 
     componentDidMount() {
@@ -97,17 +101,26 @@ class App extends React.Component {
 
     showGameForm = () => this.setState({showGameForm: true})
     hideGameForm = () => this.setState({showGameForm: false})
+    showSignupForm = () => this.setState({showSignupForm: true})
+    showLoginForm = () => this.setState({showLoginForm: true})
+    hideSignupForm = () => this.setState({showSignupForm: false})
+    hideLoginForm = () => this.setState({showLoginForm: false})
 
     render() {
-        const numberOfColumns = this.state.showGameForm
+        const numberOfColumns = this.state.showGameForm || this.state.showSignupForm || this.loginForm
             ? "ten"
             : "sixteen";
         return (
             <div className="ui container">
-                <TopNavigation showGameForm={this.showGameForm}/>
+                <TopNavigation
+                    showGameForm={this.showGameForm}
+                    showSignupForm={this.showSignupForm}
+                    showLoginForm={this.showLoginForm}/>
                 <div className="ui stackable grid">
                     <div className="six wide column">
                         {this.state.showGameForm && (<GamesForm publishers={publishers} hideGameForm={this.hideGameForm}/>)}
+                        {this.state.showSignupForm && <SignupForm hideSignupForm={this.hideSignupForm}/>}
+                        {this.state.showLoginForm && <LoginForm hideLoginForm={this.hideLoginForm}/>}
                     </div>
                     <div className={`${numberOfColumns} wide column`}>
                         <GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/>
