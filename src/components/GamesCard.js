@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Price from './Price';
-import Featured from './Featured';
+import React from "react";
+import PropTypes from "prop-types";
+import Price from "./Price";
+import Featured from "./Featured";
 
 class GamesCard extends React.Component {
     state = {
         showImage: true
-    }
+    };
 
     toggleShowImage = () => this.setState({
         showImage: !this.state.showImage
-    })
+    });
 
     render() {
         const {game, toggleFeatured} = this.props;
@@ -21,26 +21,29 @@ class GamesCard extends React.Component {
                     toggleFeatured={toggleFeatured}
                     gameId={game._id}/>
                 <div className="image">
-                    <Price price={game.price}/> {this.state.showImage
-                        ? <img src={game.thumbnail} alt="Very Nice Image"/>
-                        : <div className="description">
-                            <p>{game.description}</p>
-                        </div>}
-
+                    <Price price={game.price}/>{" "} {this.state.showImage
+                        ? (<img src={game.thumbnail} alt="Very Nice Image"/>)
+                        : (
+                            <div className="description">
+                                <p>{game.description}</p>
+                            </div>
+                        )}
                 </div>
                 <div className="content">
-                    <a href="#" className="header">{game.name}</a>
+                    <a href="#" className="header">
+                        {game.name}
+                    </a>
                     <div className="meta">
-                        <i className="icon user"/>{game.players}&nbsp;
-                        <i className="icon user"/>{game.duration}
+                        <i className="icon user"/> {game.players}&nbsp;
+                        <i className="icon user"/> {game.duration}
                         min
                         <a className="right floated" onClick={this.toggleShowImage}>
-                            <i className="icon eye"></i>
+                            <i className="icon eye"/>
                         </a>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
@@ -56,6 +59,6 @@ GamesCard.propTypes = {
     })
         .isRequired,
     toggleFeatured: PropTypes.func.isRequired
-}
+};
 
-export default GamesCard
+export default GamesCard;

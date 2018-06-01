@@ -1,3 +1,4 @@
+/* eslint class-methods-use-this: 0 */
 import React, {Component} from 'react';
 import ReactImageFallback from 'react-image-fallback';
 import PropTypes from 'prop-types';
@@ -18,9 +19,36 @@ class GamesForm extends Component {
         errors: {}
 
     }
+
+    validate(data) {
+        const errors = {}
+        if (!data.name) {
+            errors.name = 'Name field is required'
+        }
+        if (!data.players) {
+            errors.players = 'Players are required'
+        }
+        if (!data.publishers) {
+            errors.publishers = 'Publisher field is required'
+        }
+        if (!data.thumbnail) {
+            errors.thumbnail = 'Thumbnail are required'
+        }
+        if (data.price <= 0) {
+            errors.price = 'Price has to be > 0'
+        }
+
+        if (data.duration <= 0) {
+            errors.duration = 'Too short.'
+        }
+
+        return errors
+    }
+
     handleSubmit = e => {
         e.preventDefault();
-        console.log(this.state.data);
+        const errors = this.validate(this.state.data)
+        this.setState({errors})
     }
 
     handleStringChange = e => this.setState({
@@ -74,7 +102,7 @@ class GamesForm extends Component {
                                 onChange={this.handleStringChange}
                                 cols="30"
                                 rows="10"
-                                placeholder="Description"></textarea>
+                                placeholder="Description"/>
                             <FormInlineError content={errors.description} type="error"/>
                         </div>
                     </div>
@@ -152,7 +180,10 @@ class GamesForm extends Component {
                     <label htmlFor="featured">Featured?</label>
                     <FormInlineError content={errors.featured} type="error"/>
                 </div>
-                <div className="field">
+                <div
+                    className={errors.publishers
+                    ? "field error"
+                    : "field"}>
                     <select name="publishers" id="publishers" onChange={this.handleNumberChange}>
                         <option value="">Choose Publisher</option>
                         {this
@@ -162,10 +193,11 @@ class GamesForm extends Component {
                                 <option value={publisher._id} key={publisher._id}>{publisher.name}</option>
                             ))}
                     </select>
+                    <FormInlineError content={errors.publishers} type="error"/>
                 </div>
                 <div className="ui fluid buttons">
                     <button className="ui button primary" type="submit">Submit</button>
-                    <div className="or"></div>
+                    <div className="or"/>
                     <button className="ui button" onClick={this.props.hideGameForm}>Cancel</button>
                 </div>
             </form>
@@ -174,7 +206,8 @@ class GamesForm extends Component {
 }
 
 GamesForm.propTypes = {
-    hideGameForm: PropTypes.func.isRequired
+    hideGameForm: PropTypes.func.isRequired,
+    publishers: PropTypes.array.isRequired
 };
 
 export default GamesForm;
