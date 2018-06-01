@@ -49,6 +49,12 @@ class GamesForm extends Component {
         e.preventDefault();
         const errors = this.validate(this.state.data)
         this.setState({errors})
+
+        if (Object.keys(errors).length === 0) {
+            this
+                .props
+                .submit(this.state.data)
+        }
     }
 
     handleStringChange = e => this.setState({
@@ -88,7 +94,7 @@ class GamesForm extends Component {
                                 type="text"
                                 name="name"
                                 placeholder="name"
-                                value={this.state.name}
+                                value={data.name}
                                 onChange={this.handleStringChange}/>
                             <FormInlineError content={errors.name} type="error"/>
                         </div>
@@ -108,7 +114,7 @@ class GamesForm extends Component {
                     </div>
                     <div className="four wide column">
                         <ReactImageFallback
-                            src={this.state.thumbnail}
+                            src={data.thumbnail}
                             fallbackImage="http://via.placeholder.com/250x250"
                             className="ui image"/>
                     </div>
@@ -123,7 +129,7 @@ class GamesForm extends Component {
                         type="text"
                         name="thumbnail"
                         placeholder="thumbnail"
-                        value={this.state.thumbnail}
+                        value={data.thumbnail}
                         onChange={this.handleStringChange}/>
                     <FormInlineError content={errors.thumbnail} type="error"/>
                 </div>
@@ -137,7 +143,7 @@ class GamesForm extends Component {
                         <input
                             type="number"
                             name="price"
-                            value={this.state.price}
+                            value={data.price}
                             onChange={this.handleNumberChange}/>
                         <FormInlineError content={errors.price} type="error"/>
                     </div>
@@ -147,9 +153,9 @@ class GamesForm extends Component {
                         : "field"}>
                         <label htmlFor="">Duration(in min)</label>
                         <input
-                            type="text"
+                            type="number"
                             name="duration"
-                            value={this.state.duration}
+                            value={data.duration}
                             onChange={this.handleNumberChange}/>
                         <FormInlineError content={errors.duration} type="error"/>
                     </div>
@@ -161,7 +167,7 @@ class GamesForm extends Component {
                         <input
                             type="text"
                             name="players"
-                            value={this.state.players}
+                            value={data.players}
                             onChange={this.handleStringChange}/>
                         <FormInlineError content={errors.players} type="error"/>
                     </div>
@@ -175,7 +181,7 @@ class GamesForm extends Component {
                         type="checkbox"
                         id="featured"
                         name="featured"
-                        checked={this.state.featured}
+                        checked={data.featured}
                         onChange={this.handleCheckboxChange}/>
                     <label htmlFor="featured">Featured?</label>
                     <FormInlineError content={errors.featured} type="error"/>
@@ -207,7 +213,8 @@ class GamesForm extends Component {
 
 GamesForm.propTypes = {
     hideGameForm: PropTypes.func.isRequired,
-    publishers: PropTypes.array.isRequired
+    publishers: PropTypes.array.isRequired,
+    submit: PropTypes.func.isRequired
 };
 
 export default GamesForm;
