@@ -4,33 +4,48 @@ import PropTypes from 'prop-types';
 
 class GamesForm extends Component {
     state = {
-        name: '',
-        description: '',
-        price: 0,
-        duration: 0,
-        players: '',
-        featured: true,
-        publisher: 0,
-        thumbnail: ""
+        data: {
+            name: '',
+            description: '',
+            price: 0,
+            duration: 0,
+            players: '',
+            featured: true,
+            publisher: 0,
+            thumbnail: ""
+        },
+        errors: {}
+
     }
     handleSubmit = e => {
         e.preventDefault();
-        console.log(this.state);
+        console.log(this.state.data);
     }
 
     handleStringChange = e => this.setState({
-        [e.target.name]: e.target.value
+        data: {
+            ...this.state.data,
+            [e.target.name]: e.target.value
+        }
     })
 
     handleNumberChange = e => this.setState({
-        [e.target.name]: parseInt(e.target.value, 10)
+        data: {
+            ...this.state.data,
+            [e.target.name]: parseInt(e.target.value, 10)
+        }
     })
 
     handleCheckboxChange = e => this.setState({
-        [e.target.name]: e.target.checked
+        data: {
+            ...this.state.data,
+            [e.target.name]: e.target.checked
+        }
+
     })
 
     render() {
+        const data = this.state;
         return (
             <form className="ui form" onSubmit={this.handleSubmit}>
                 <div className="ui grid">
