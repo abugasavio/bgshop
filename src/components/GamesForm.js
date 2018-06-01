@@ -119,8 +119,8 @@ class GamesForm extends Component {
                             ))}
                     </select>
                 </div>
-                <div className="ui large buttons">
-                    <button className="ui button" type="submit">Submit</button>
+                <div className="ui fluid buttons">
+                    <button className="ui button primary" type="submit">Submit</button>
                     <div className="or"></div>
                     <button className="ui button" onClick={this.props.hideGameForm}>Cancel</button>
                 </div>

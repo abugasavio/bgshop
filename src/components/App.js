@@ -99,8 +99,21 @@ class App extends React.Component {
     hideGameForm = () => this.setState({showGameForm: false})
 
     render() {
+        const numberOfColumns = this.state.showGameForm
+            ? "ten"
+            : "sixteen";
         return (
-            <div className="ui container"><TopNavigation showGameForm={this.showGameForm}/>{this.state.showGameForm && <GamesForm publishers={publishers} hideGameForm={this.hideGameForm}/>}<br/><GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/></div>
+            <div className="ui container">
+                <TopNavigation showGameForm={this.showGameForm}/>
+                <div className="ui stackable grid">
+                    <div className="six wide column">
+                        {this.state.showGameForm && (<GamesForm publishers={publishers} hideGameForm={this.hideGameForm}/>)}
+                    </div>
+                    <div className={`${numberOfColumns} wide column`}>
+                        <GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
