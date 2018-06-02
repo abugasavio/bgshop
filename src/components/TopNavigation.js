@@ -5,13 +5,13 @@ const TopNavigation = ({showGameForm, showLoginForm, showSignupForm}) => (
     <div className="ui secondary pointing menu">
         <a href="/" className="item">BGShop</a>
         <a className="item" onClick={showGameForm}>
-            <i className="icon plus"></i>Add New Game
+            <i className="icon plus" />Add New Game
         </a>
         <a className="item" onClick={showLoginForm}>
-            <i className="icon plus"></i>Login
+            <i className="icon plus" />Login
         </a>
         <a className="item" onClick={showSignupForm}>
-            <i className="icon plus"></i>Signup
+            <i className="icon plus" />Signup
         </a>
     </div>
 )
