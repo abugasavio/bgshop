@@ -112,6 +112,13 @@ class App extends React.Component {
     showGameForm: false
   })
 
+  deleteGame = game => this.setState({
+    games: this
+      .state
+      .games
+      .filter(item => item._id !== game._id)
+  })
+
   toggleFeatured = gameId => this.setState({
     games: this.sortGames(this.state.games.map(game => gameId === game._id
       ? {
@@ -153,7 +160,8 @@ class App extends React.Component {
             <GamesList
               games={this.state.games}
               toggleFeatured={this.toggleFeatured}
-              editGame={this.selectGameForEditing}/>
+              editGame={this.selectGameForEditing}
+              deleteGame={this.deleteGame}/>
           </div>
         </div>
       </div>

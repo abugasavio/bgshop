@@ -5,15 +5,19 @@ import Featured from "./Featured";
 
 class GamesCard extends React.Component {
   state = {
-    showImage: true
+    showImage: true,
+    showConfirmation: false
   };
 
   toggleShowImage = () => this.setState({
     showImage: !this.state.showImage
   });
 
+  showConfirmation = () => this.setState({showConfirmation: true})
+  hideConfirmation = () => this.setState({showConfirmation: false})
+
   render() {
-    const {game, toggleFeatured, editGame} = this.props;
+    const {game, toggleFeatured, editGame, deleteGame} = this.props;
     return (
       <div className="ui card">
         <Featured
@@ -40,14 +44,26 @@ class GamesCard extends React.Component {
           </div>
         </div>
         <div className="extra content">
-          <div className="ui two buttons">
-            <a className="ui basic button red" onClick={() => editGame(game)}>
-              <i className="ui icon edit"/>
-            </a>
-            <a className="ui basic button green">
-              <i className="ui icon trash"/>
-            </a>
-          </div>
+          {this.state.showConfirmation
+            ? <div className="ui two buttons">
+                <a className="ui basic button grey" onClick={() => deleteGame(game)}>
+                  <i className="ui icon check"/>YES
+                </a>
+                <a className="ui basic button grey" onClick={this.hideConfirmation}>
+                  <i className="ui icon close"/>NO
+                </a>
+              </div>
+
+            : <div className="ui two buttons">
+              <a className="ui basic button green" onClick={() => editGame(game)}>
+                <i className="ui icon edit"/>
+              </a>
+              <a className="ui basic button red" onClick={this.showConfirmation}>
+                <i className="ui icon trash"/>
+              </a>
+            </div>
+}
+
         </div>
       </div>
     );
@@ -66,7 +82,8 @@ GamesCard.propTypes = {
   })
     .isRequired,
   toggleFeatured: PropTypes.func.isRequired,
-  editGame: PropTypes.func.isRequired
+  editGame: PropTypes.func.isRequired,
+  deleteGame: PropTypes.func.isRequired
 }
 
 export default GamesCard;
