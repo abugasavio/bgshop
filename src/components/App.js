@@ -91,6 +91,10 @@ class App extends React.Component {
     ], ["desc", "asc"]);
   }
 
+  saveGame = game => (game._id
+    ? this.updateGame(game)
+    : this.addGame(game))
+
   addGame = game => this.setState({
     showGameForm: false,
     games: this.sortGames([
@@ -99,6 +103,13 @@ class App extends React.Component {
         _id: this.state.games.length + 1
       }
     ])
+  })
+
+  updateGame = game => this.setState({
+    games: this.sortGames(this.state.games.map(item => item._id === game._id
+      ? game
+      : item)),
+    showGameForm: false
   })
 
   toggleFeatured = gameId => this.setState({
@@ -110,8 +121,8 @@ class App extends React.Component {
       : game))
   });
 
-  showGameForm = () => this.setState({showGameForm: true});
-  hideGameForm = () => this.setState({showGameForm: false});
+  showGameForm = () => this.setState({showGameForm: true, selectedGame: {}});
+  hideGameForm = () => this.setState({showGameForm: false, selectedGame: {}});
   showSignupForm = () => this.setState({showSignupForm: true});
   showLoginForm = () => this.setState({showLoginForm: true});
   hideSignupForm = () => this.setState({showSignupForm: false});
@@ -133,7 +144,7 @@ class App extends React.Component {
             {this.state.showGameForm && (<GamesForm
               publishers={publishers}
               hideGameForm={this.hideGameForm}
-              submit={this.addGame}
+              submit={this.saveGame}
               game={this.state.selectedGame}/>)}
             {this.state.showSignupForm && (<SignupForm hideSignupForm={this.hideSignupForm}/>)}
             {this.state.showLoginForm && (<LoginForm hideLoginForm={this.hideLoginForm}/>)}

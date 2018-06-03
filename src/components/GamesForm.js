@@ -4,19 +4,21 @@ import ReactImageFallback from 'react-image-fallback';
 import PropTypes from 'prop-types';
 import FormInlineError from './FormInlineError';
 
+const initialData = {
+  id: null,
+  name: '',
+  description: '',
+  price: 0,
+  duration: 0,
+  players: '',
+  featured: true,
+  publisher: 0,
+  thumbnail: ""
+}
+
 class GamesForm extends Component {
   state = {
-    data: {
-      id: null,
-      name: '',
-      description: '',
-      price: 0,
-      duration: 0,
-      players: '',
-      featured: true,
-      publisher: 0,
-      thumbnail: ""
-    },
+    data: initialData,
     errors: {}
 
   }
@@ -24,6 +26,15 @@ class GamesForm extends Component {
   componentDidMount() {
     if (this.props.game._id) {
       this.setState({data: this.props.game})
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.game._id && nextProps.game._id !== this.state.data._id) {
+      this.setState({data: nextProps.game})
+    }
+    if (!nextProps.game._id) {
+      this.setState({data: initialData});
     }
   }
 
