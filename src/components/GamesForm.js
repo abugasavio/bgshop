@@ -7,6 +7,7 @@ import FormInlineError from './FormInlineError';
 class GamesForm extends Component {
   state = {
     data: {
+      id: null,
       name: '',
       description: '',
       price: 0,
@@ -18,6 +19,12 @@ class GamesForm extends Component {
     },
     errors: {}
 
+  }
+
+  componentDidMount() {
+    if (this.props.game._id) {
+      this.setState({data: this.props.game})
+    }
   }
 
   validate(data) {
@@ -212,7 +219,17 @@ class GamesForm extends Component {
 GamesForm.propTypes = {
   hideGameForm: PropTypes.func.isRequired,
   publishers: PropTypes.array.isRequired,
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
+  game: PropTypes
+    .shape({
+    name: PropTypes.string,
+    thumbnail: PropTypes.string,
+    players: PropTypes.string,
+    price: PropTypes.number,
+    featured: PropTypes.bool,
+    duration: PropTypes.number
+  })
+    .isRequired
 };
 
 export default GamesForm;

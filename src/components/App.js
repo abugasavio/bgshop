@@ -1,3 +1,5 @@
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["sortGames"] }] */
+
 import React from "react";
 import _orderBy from "lodash/orderBy";
 import GamesList from "./GamesList";
@@ -73,7 +75,8 @@ class App extends React.Component {
     games: [],
     showGameForm: false,
     showSignupForm: false,
-    showLoginForm: false
+    showLoginForm: false,
+    selectedGame: {}
   };
 
   componentDidMount() {
@@ -113,6 +116,7 @@ class App extends React.Component {
   showLoginForm = () => this.setState({showLoginForm: true});
   hideSignupForm = () => this.setState({showSignupForm: false});
   hideLoginForm = () => this.setState({showLoginForm: false});
+  selectGameForEditing = game => this.setState({selectedGame: game, showGameForm: true})
 
   render() {
     const numberOfColumns = this.state.showGameForm || this.state.showSignupForm || this.loginForm
@@ -129,12 +133,16 @@ class App extends React.Component {
             {this.state.showGameForm && (<GamesForm
               publishers={publishers}
               hideGameForm={this.hideGameForm}
-              submit={this.addGame}/>)}
+              submit={this.addGame}
+              game={this.state.selectedGame}/>)}
             {this.state.showSignupForm && (<SignupForm hideSignupForm={this.hideSignupForm}/>)}
             {this.state.showLoginForm && (<LoginForm hideLoginForm={this.hideLoginForm}/>)}
           </div>
           <div className={`${numberOfColumns} wide column`}>
-            <GamesList games={this.state.games} toggleFeatured={this.toggleFeatured}/>
+            <GamesList
+              games={this.state.games}
+              toggleFeatured={this.toggleFeatured}
+              editGame={this.selectGameForEditing}/>
           </div>
         </div>
       </div>

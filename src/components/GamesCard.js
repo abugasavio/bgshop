@@ -13,7 +13,7 @@ class GamesCard extends React.Component {
   });
 
   render() {
-    const {game, toggleFeatured} = this.props;
+    const {game, toggleFeatured, editGame} = this.props;
     return (
       <div className="ui card">
         <Featured
@@ -22,7 +22,7 @@ class GamesCard extends React.Component {
           gameId={game._id}/>
         <div className="image">
           <Price price={game.price}/>{" "} {this.state.showImage
-            ? (<img src={game.thumbnail} alt="Very Nice Image"/>)
+            ? (<img src={game.thumbnail} alt="Very Nice"/>)
             : (
               <div className="description">
                 <p>{game.description}</p>
@@ -30,17 +30,23 @@ class GamesCard extends React.Component {
             )}
         </div>
         <div className="content">
-          <a href="#" className="header">
+          <a className="header">
             {game.name}
           </a>
           <div className="meta">
             <i className="icon user"/> {game.players}&nbsp;
             <i className="icon user"/> {game.duration}
             min
-            <a className="right floated" onClick={this.toggleShowImage}>
-              <i className="icon eye"/>
+          </div>
+        </div>
+        <div className="extra content">
+          <div className="ui two buttons">
+            <a className="ui basic button red" onClick={() => editGame(game)}>
+              <i className="ui icon edit"/>
             </a>
-
+            <a className="ui basic button green">
+              <i className="ui icon trash"/>
+            </a>
           </div>
         </div>
       </div>
@@ -59,7 +65,8 @@ GamesCard.propTypes = {
     description: PropTypes.string.isRequired
   })
     .isRequired,
-  toggleFeatured: PropTypes.func.isRequired
-};
+  toggleFeatured: PropTypes.func.isRequired,
+  editGame: PropTypes.func.isRequired
+}
 
 export default GamesCard;
