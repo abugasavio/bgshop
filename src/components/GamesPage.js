@@ -5,7 +5,6 @@ import _orderBy from "lodash/orderBy";
 import _find from 'lodash/find';
 import GamesList from "./GamesList";
 import GamesForm from "./GamesForm";
-import TopNavigation from "./TopNavigation";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import api from '../api';
@@ -104,10 +103,6 @@ class GamesPage extends React.Component {
       : "sixteen";
     return (
       <div className="ui container">
-        <TopNavigation
-          showGameForm={this.showGameForm}
-          showSignupForm={this.showSignupForm}
-          showLoginForm={this.showLoginForm}/>
         <div className="ui stackable grid">
           <div className="six wide column">
             {this.state.showGameForm && (<GamesForm

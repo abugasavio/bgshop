@@ -5,6 +5,9 @@ export default {
     fetchAll: () => axios
       .get('/api/unsafegames')
       .then(res => res.data.games),
+    fetchById: id => axios
+      .get(`/api/unsafegames/${id}`)
+      .then(res => res.data.game),
     create: game => axios
       .post('/api/unsafegames', {game})
       .then(res => res.data.game),
