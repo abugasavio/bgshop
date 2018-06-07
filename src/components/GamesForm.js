@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import FormInlineError from './FormInlineError';
 
 const initialData = {
-  id: null,
   name: '',
   description: '',
   price: 0,
@@ -19,7 +18,8 @@ const initialData = {
 class GamesForm extends Component {
   state = {
     data: initialData,
-    errors: {}
+    errors: {},
+    loading: false
 
   }
 
@@ -71,9 +71,11 @@ class GamesForm extends Component {
     console.log(errors)
 
     if (Object.keys(errors).length === 0) {
+      this.setState({loading: true})
       this
         .props
         .submit(this.state.data)
+        .catch(err => this.setState({errors: err.response.data.errors, loading: false}))
     }
   }
 
@@ -100,9 +102,13 @@ class GamesForm extends Component {
   })
 
   render() {
-    const {data, errors} = this.state;
+    const {data, errors, loading} = this.state;
+    const formClassNames = loading
+      ? "ui form loading"
+      : "ui form"
+
     return (
-      <form className="ui form" onSubmit={this.handleSubmit}>
+      <form className={formClassNames} onSubmit={this.handleSubmit}>
         <div className="ui grid">
           <div className="twelve wide column">
             <div
@@ -230,10 +236,13 @@ class GamesForm extends Component {
 
 GamesForm.propTypes = {
   hideGameForm: PropTypes.func.isRequired,
-  publishers: PropTypes.array.isRequired,
+  publishers: PropTypes
+    .arrayOf(PropTypes.shape({_id: PropTypes.string.isRequired, name: PropTypes.string.isRequired}))
+    .isRequired,
   submit: PropTypes.func.isRequired,
   game: PropTypes
     .shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     thumbnail: PropTypes.string,
     players: PropTypes.string,
