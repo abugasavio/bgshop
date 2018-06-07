@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="ui container"><TopNavigation/>
         <Route path="/" exact component={HomePage}/>
-        <Route path="/games" exact component={GamesPage}/>
+        <Route path="/games" component={GamesPage}/>
         <Route path="/game/:_id" exact component={ShowGamePage}/>
       </div>
     );

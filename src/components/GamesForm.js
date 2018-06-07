@@ -1,6 +1,7 @@
 /* eslint class-methods-use-this: 0 */
 import React, {Component} from 'react';
 import ReactImageFallback from 'react-image-fallback';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FormInlineError from './FormInlineError';
 
@@ -227,7 +228,7 @@ class GamesForm extends Component {
         <div className="ui fluid buttons">
           <button className="ui button primary" type="submit">Submit</button>
           <div className="or"/>
-          <button className="ui button" onClick={this.props.hideGameForm}>Cancel</button>
+          <Link to="/games" className="ui button">Cancel</Link>
         </div>
       </form>
     )

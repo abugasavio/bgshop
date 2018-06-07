@@ -3,10 +3,9 @@
 import React from "react";
 import _orderBy from "lodash/orderBy";
 import _find from 'lodash/find';
+import {Route} from 'react-router-dom';
 import GamesList from "./GamesList";
 import GamesForm from "./GamesForm";
-import SignupForm from "./SignupForm";
-import LoginForm from "./LoginForm";
 import api from '../api';
 
 const publishers = [
@@ -25,9 +24,6 @@ const publishers = [
 class GamesPage extends React.Component {
   state = {
     games: [],
-    showGameForm: false,
-    showSignupForm: false,
-    showLoginForm: false,
     selectedGame: {},
     loading: true
   };
@@ -89,30 +85,25 @@ class GamesPage extends React.Component {
 
   };
 
-  showGameForm = () => this.setState({showGameForm: true, selectedGame: {}});
-  hideGameForm = () => this.setState({showGameForm: false, selectedGame: {}});
-  showSignupForm = () => this.setState({showSignupForm: true});
-  showLoginForm = () => this.setState({showLoginForm: true});
-  hideSignupForm = () => this.setState({showSignupForm: false});
-  hideLoginForm = () => this.setState({showLoginForm: false});
-  selectGameForEditing = game => this.setState({selectedGame: game, showGameForm: true})
+  selectGameForEditing = game => this.setState({selectedGame: game})
 
   render() {
-    const numberOfColumns = this.state.showGameForm || this.state.showSignupForm || this.loginForm
-      ? "ten"
-      : "sixteen";
+    const numberOfColumns = this.props.location.pathname == '/games'
+      ? "sixteen"
+      : "ten";
     return (
       <div className="ui container">
         <div className="ui stackable grid">
-          <div className="six wide column">
-            {this.state.showGameForm && (<GamesForm
+          <Route
+            path="/games/new"
+            render={() => (
+            <div className="six wide column"><GamesForm
               publishers={publishers}
-              hideGameForm={this.hideGameForm}
               submit={this.saveGame}
-              game={this.state.selectedGame}/>)}
-            {this.state.showSignupForm && (<SignupForm hideSignupForm={this.hideSignupForm}/>)}
-            {this.state.showLoginForm && (<LoginForm hideLoginForm={this.hideLoginForm}/>)}
-          </div>
+              game={this.state.selectedGame}/>
+            </div>
+          )}/>
+
           <div className={`${numberOfColumns} wide column`}>
             {this.state.loading
               ? <div className="ui icon message">
