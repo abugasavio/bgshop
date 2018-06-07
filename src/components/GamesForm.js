@@ -46,8 +46,8 @@ class GamesForm extends Component {
     if (!data.players) {
       errors.players = 'Players are required'
     }
-    if (!data.publishers) {
-      errors.publishers = 'Publisher field is required'
+    if (!data.publisher) {
+      errors.publisher = 'Publisher field is required'
     }
     if (!data.thumbnail) {
       errors.thumbnail = 'Thumbnail are required'
@@ -67,6 +67,8 @@ class GamesForm extends Component {
     e.preventDefault();
     const errors = this.validate(this.state.data)
     this.setState({errors})
+
+    console.log(errors)
 
     if (Object.keys(errors).length === 0) {
       this
@@ -202,11 +204,10 @@ class GamesForm extends Component {
           <label htmlFor="featured">Featured?</label>
           <FormInlineError content={errors.featured} type="error"/>
         </div>
-        <div
-          className={errors.publishers
+        <div className={errors.publisher
           ? "field error"
           : "field"}>
-          <select name="publishers" id="publishers" onChange={this.handleNumberChange}>
+          <select name="publisher" id="publisher" onChange={this.handleNumberChange}>
             <option value="">Choose Publisher</option>
             {this
               .props
@@ -215,7 +216,7 @@ class GamesForm extends Component {
                 <option value={publisher._id} key={publisher._id}>{publisher.name}</option>
               ))}
           </select>
-          <FormInlineError content={errors.publishers} type="error"/>
+          <FormInlineError content={errors.publisher} type="error"/>
         </div>
         <div className="ui fluid buttons">
           <button className="ui button primary" type="submit">Submit</button>

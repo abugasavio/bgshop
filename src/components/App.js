@@ -46,19 +46,16 @@ class App extends React.Component {
     ], ["desc", "asc"]);
   }
 
-  saveGame = game => (game._id
-    ? this.updateGame(game)
-    : this.addGame(game))
-
-  addGame = game => this.setState({
-    showGameForm: false,
-    games: this.sortGames([
-      ...this.state.games, {
-        ...game,
-        _id: this.state.games.length + 1
-      }
-    ])
-  })
+  saveGame = gameData => api
+    .games
+    .create(gameData)
+    .then(game => this.setState({
+      games: this.sortGames({
+        ...this.state.games,
+        game
+      }),
+      showGameForm: false
+    }));
 
   updateGame = game => this.setState({
     games: this.sortGames(this.state.games.map(item => item._id === game._id
