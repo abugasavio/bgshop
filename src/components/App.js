@@ -2,6 +2,7 @@
 
 import React from "react";
 import _orderBy from "lodash/orderBy";
+import _find from 'lodash/find';
 import GamesList from "./GamesList";
 import GamesForm from "./GamesForm";
 import TopNavigation from "./TopNavigation";
@@ -28,16 +29,20 @@ class App extends React.Component {
     showGameForm: false,
     showSignupForm: false,
     showLoginForm: false,
-    selectedGame: {}
+    selectedGame: {},
+    loading: true
   };
 
   componentDidMount() {
+
     api
       .games
       .fetchAll()
       .then(games => this.setState({
-        games: this.sortGames(games)
+        games: this.sortGames(games),
+        loading: false
       }))
+
   }
 
   sortGames(games) {
@@ -57,28 +62,33 @@ class App extends React.Component {
       showGameForm: false
     }));
 
-  updateGame = game => this.setState({
-    games: this.sortGames(this.state.games.map(item => item._id === game._id
-      ? game
-      : item)),
-    showGameForm: false
-  })
+  updateGame = gameData => api
+    .games
+    .update(gameData)
+    .then(game => this.setState({
+      games: this.sortGames(this.state.games.map(item => item._id === game._id
+        ? game
+        : item)),
+      showGameForm: false
+    }))
 
-  deleteGame = game => this.setState({
-    games: this
-      .state
-      .games
-      .filter(item => item._id !== game._id)
-  })
+  deleteGame = game => api
+    .games
+    .delete(game)
+    .then(this.setState({
+      games: this
+        .state
+        .games
+        .filter(item => item._id !== game._id)
+    }))
+  toggleFeatured = gameId => {
+    const game = _find(this.state.games, {_id: gameId})
+    return this.updateGame({
+      ...game,
+      featured: !game.featured
+    })
 
-  toggleFeatured = gameId => this.setState({
-    games: this.sortGames(this.state.games.map(game => gameId === game._id
-      ? {
-        ...game,
-        featured: !game.featured
-      }
-      : game))
-  });
+  };
 
   showGameForm = () => this.setState({showGameForm: true, selectedGame: {}});
   hideGameForm = () => this.setState({showGameForm: false, selectedGame: {}});
@@ -109,11 +119,22 @@ class App extends React.Component {
             {this.state.showLoginForm && (<LoginForm hideLoginForm={this.hideLoginForm}/>)}
           </div>
           <div className={`${numberOfColumns} wide column`}>
-            <GamesList
-              games={this.state.games}
-              toggleFeatured={this.toggleFeatured}
-              editGame={this.selectGameForEditing}
-              deleteGame={this.deleteGame}/>
+            {this.state.loading
+              ? <div className="ui icon message">
+                  <i className="notched circle loading icon"/>
+                  <div className="content">
+                    <div className="header">Wait a second</div>
+                    <p>
+                      Loading games collection
+                    </p>
+                  </div>
+                </div>
+              : (<GamesList
+                games={this.state.games}
+                toggleFeatured={this.toggleFeatured}
+                editGame={this.selectGameForEditing}
+                deleteGame={this.deleteGame}/>)
+}
           </div>
         </div>
       </div>
