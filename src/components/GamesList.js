@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import GamesCard from "./GamesCard";
 import Message from "./Message";
 
-const GamesList = ({games, toggleFeatured, editGame, deleteGame}) => (
+const GamesList = ({games, toggleFeatured, deleteGame}) => (
   <div className="ui four cards">
     {games.length === 0
       ? (<Message content="No Games here" type="warning" header="sorry"/>)
@@ -11,7 +11,6 @@ const GamesList = ({games, toggleFeatured, editGame, deleteGame}) => (
         game={game}
         key={game._id}
         toggleFeatured={toggleFeatured}
-        editGame={editGame}
         deleteGame={deleteGame}/>)))}
   </div>
 
@@ -20,7 +19,6 @@ const GamesList = ({games, toggleFeatured, editGame, deleteGame}) => (
 GamesList.propTypes = {
   games: PropTypes.arrayOf(PropTypes.object),
   toggleFeatured: PropTypes.func.isRequired,
-  editGame: PropTypes.func.isRequired,
   deleteGame: PropTypes.func.isRequired
 };
 

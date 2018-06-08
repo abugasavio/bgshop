@@ -1,7 +1,7 @@
 /* eslint class-methods-use-this: 0 */
 import React, {Component} from 'react';
 import ReactImageFallback from 'react-image-fallback';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FormInlineError from './FormInlineError';
 
@@ -20,8 +20,8 @@ class GamesForm extends Component {
   state = {
     data: initialData,
     errors: {},
-    loading: false
-
+    loading: false,
+    redirect: true
   }
 
   componentDidMount() {
@@ -69,13 +69,12 @@ class GamesForm extends Component {
     const errors = this.validate(this.state.data)
     this.setState({errors})
 
-    console.log(errors)
-
     if (Object.keys(errors).length === 0) {
       this.setState({loading: true})
       this
         .props
         .submit(this.state.data)
+        .then(() => this.setState({redirect: true}))
         .catch(err => this.setState({errors: err.response.data.errors, loading: false}))
     }
   }
@@ -110,6 +109,7 @@ class GamesForm extends Component {
 
     return (
       <form className={formClassNames} onSubmit={this.handleSubmit}>
+        {this.state.redirect && <Redirect to="/games"/>}
         <div className="ui grid">
           <div className="twelve wide column">
             <div
@@ -236,7 +236,6 @@ class GamesForm extends Component {
 }
 
 GamesForm.propTypes = {
-  hideGameForm: PropTypes.func.isRequired,
   publishers: PropTypes
     .arrayOf(PropTypes.shape({_id: PropTypes.string.isRequired, name: PropTypes.string.isRequired}))
     .isRequired,

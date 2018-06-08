@@ -24,7 +24,6 @@ const publishers = [
 class GamesPage extends React.Component {
   state = {
     games: [],
-    selectedGame: {},
     loading: true
   };
 
@@ -46,7 +45,11 @@ class GamesPage extends React.Component {
     ], ["desc", "asc"]);
   }
 
-  saveGame = gameData => api
+  saveGame = game => (game._id
+    ? this.updateGame(game)
+    : this.addGame(game))
+
+  addGame = gameData => api
     .games
     .create(gameData)
     .then(game => this.setState({
@@ -54,7 +57,7 @@ class GamesPage extends React.Component {
         ...this.state.games,
         game
       }),
-      showGameForm: false
+      loading: false
     }));
 
   updateGame = gameData => api
@@ -64,7 +67,7 @@ class GamesPage extends React.Component {
       games: this.sortGames(this.state.games.map(item => item._id === game._id
         ? game
         : item)),
-      showGameForm: false
+      loading: false
     }))
 
   deleteGame = game => api
@@ -85,10 +88,8 @@ class GamesPage extends React.Component {
 
   };
 
-  selectGameForEditing = game => this.setState({selectedGame: game})
-
   render() {
-    const numberOfColumns = this.props.location.pathname == '/games'
+    const numberOfColumns = this.props.location.pathname === '/games'
       ? "sixteen"
       : "ten";
     return (
@@ -97,10 +98,16 @@ class GamesPage extends React.Component {
           <Route
             path="/games/new"
             render={() => (
+            <div className="six wide column"><GamesForm publishers={publishers} submit={this.saveGame} game={{}}/>
+            </div>
+          )}/>
+          <Route
+            path="/games/edit/:_id"
+            render={(props) => (
             <div className="six wide column"><GamesForm
               publishers={publishers}
               submit={this.saveGame}
-              game={this.state.selectedGame}/>
+              game={_find(this.state.games, {_id: props.match.params._id} || {})}/>
             </div>
           )}/>
 
@@ -118,7 +125,6 @@ class GamesPage extends React.Component {
               : (<GamesList
                 games={this.state.games}
                 toggleFeatured={this.toggleFeatured}
-                editGame={this.selectGameForEditing}
                 deleteGame={this.deleteGame}/>)
 }
           </div>
